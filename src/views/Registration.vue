@@ -40,7 +40,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ref } from "vue";
+import { ref } from 'vue';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
 
@@ -49,12 +49,15 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const email = ref("");
 const password = ref("");
-const auth = getAuth(app);
+const auth = getAuth();
 export default defineComponent({
   name: "Registration",
+  data() {
+    return{}
+  },
   methods: {
     register() {
-      console.log("Clique");
+      console.log(email);
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((data) => {
           console.log("Success");
