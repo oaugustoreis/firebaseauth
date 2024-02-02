@@ -29,7 +29,7 @@
             Concordo com os <a href="">Termos e Condições</a></span
           >
         </div>
-        <button class="btn" v-on:click="register">Cadastrar</button>
+        <button class="btn" @click="register">Cadastrar</button>
         <button class="google-btn">
           <i class="fa-brands fa-google"></i>CONECTE COM GOOGLE
         </button>
@@ -40,33 +40,38 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ref } from 'vue';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { ref } from 'vue'
 
-// const register = () => {};
+
+// 
 // const signGoogle = () => {};
-const router = useRouter();
-const email = ref("");
-const password = ref("");
+
 const auth = getAuth();
 export default defineComponent({
+  
   name: "Registration",
-  data() {
-    return{}
-  },
-  methods: {
-    register() {
-      console.log(email);
+  setup(){
+
+    const router = useRouter();
+    const email = ref('');
+    const password = ref('');
+    const register = () => {
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((data) => {
-          console.log("Success");
-          router.push("/feed");
+          router.push('/login');
         })
         .catch((error) => {
-          console.log(error.code), alert(error.message);
+          console.log(error.code);
+          alert(error.message);
         });
-    },
+    };
+    return {
+      email,
+      password,
+      register
+    };
   },
 });
 </script>
