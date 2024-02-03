@@ -1,18 +1,15 @@
 @import './base.css';
-
-#app {
-  max-width: 1280px;
-  margin: auto;
-  padding: 2rem;
-  font-weight: normal;
+#app{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
-
 a,
 .green {
   text-decoration: none;
   color: rgb(114, 116, 115);
   transition: 0.4s;
-  padding: 3px;
 }
 
 @media (hover: hover) {
@@ -27,6 +24,12 @@ a,
     place-items: center;
   }
 }
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 :root {
   --color1: #413249;
@@ -34,4 +37,44 @@ a,
   --color3: #e2b24c;
   --color4: #eb783f;
   --color5: #ff426a;
+}
+
+
+.button-74 {
+  background-color: var(--color3);
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover {
+  background-color: #fff;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+.mg-auto{
+  margin: auto;
 }

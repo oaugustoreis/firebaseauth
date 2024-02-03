@@ -1,5 +1,5 @@
 <template>
-  <div class="container-1">
+  <div class="mg-auto">
     <div class="login center">
       <div class="center">
         <div class="center">
@@ -8,7 +8,12 @@
         </div>
         <div class="backfield">
           <span>Nome:</span>
-          <input class="fields" type="text" placeholder="Digite seu nome..." />
+          <input
+            class="fields"
+            type="text"
+            v-model="nome"
+            placeholder="Digite seu nome..."
+          />
           <span>Email:</span>
           <input
             class="fields"
@@ -24,75 +29,69 @@
             placeholder="Senha..."
           />
         </div>
+        <button class="google-btn" @click="signInGoogle">
+          <i class="fa-brands fa-google"></i>CONECTE COM GOOGLE
+        </button>
         <div class="checkbox-wrapper-2 center">
           <input type="checkbox" class="sc-gJwTLC ikxBAC" /><span>
             Concordo com os <a href="">Termos e Condições</a></span
           >
         </div>
         <button class="btn" @click="register">Cadastrar</button>
-        <button class="google-btn">
-          <i class="fa-brands fa-google"></i>CONECTE COM GOOGLE
-        </button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+<script setup>
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 import { useRouter } from "vue-router";
-import { ref } from 'vue'
-
-
-// 
-// const signGoogle = () => {};
+import { ref } from "vue";
 
 const auth = getAuth();
-export default defineComponent({
-  
-  name: "Registration",
-  setup(){
+const router = useRouter();
+const email = ref("");
+const nome = ref("");
+const password = ref("");
 
-    const router = useRouter();
-    const email = ref('');
-    const password = ref('');
-    const register = () => {
-      createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then((data) => {
-          router.push('/login');
-        })
-        .catch((error) => {
-          console.log(error.code);
-          alert(error.message);
-        });
-    };
-    return {
-      email,
-      password,
-      register
-    };
-  },
-});
+let db;
+db = getFirestore();
+
+const register = () => {
+  createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then((data) => {
+      addDoc(collection(db, "users"), {
+        email: email.value,
+        timestamp: Date.now(),
+        name: nome.value,
+        userId: auth.currentUser.uid,
+      });
+      router.push("/feed");
+    })
+    .catch((error) => {
+      console.log(error.code);
+      alert(error.message);
+    });
+};
+
+const signInGoogle = () => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(getAuth(), provider).then((result) => {
+    console.log(result.user);
+    router.push("/feed");
+  });
+};
 </script>
 
 
 
 
 <style lang="scss" scoped>
-* {
-  color: var(--color1);
-}
-.center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 .login {
-  padding: 10px 100px;
-  width: 560px;
-  height: 648px;
+  padding: 10px 10px;
+  width: 500px;
+  height: 548px;
   border: 2px solid var(--color1);
   border-radius: 10px;
   background-color: #fff;
@@ -102,11 +101,11 @@ export default defineComponent({
   }
 }
 .backfield {
+  width: 70%;
   font-size: 20px;
   margin: 10px 0;
 }
 .fields {
-  margin-bottom: 10px;
   border-radius: 10px;
   width: 100%;
   border: 1px solid var(--color1);
@@ -140,9 +139,14 @@ span {
   }
   a {
     color: var(--color4);
+    &:hover {
+      background: none;
+      text-decoration: underline;
+    }
   }
 }
 .google-btn {
+  width: 70%;
   align-items: center;
   background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -153,13 +157,11 @@ span {
   cursor: pointer;
   display: inline-flex;
   font-size: 16px;
+  height: 30px;
   font-weight: 600;
   justify-content: center;
-  line-height: 1.25;
-  margin: 50px 0 0 0;
   min-height: 3rem;
   transition: 0.2s;
-  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
   i {
     border: none;
     color: var(--color1);
@@ -169,7 +171,6 @@ span {
   &:hover {
     border-color: rgba(0, 0, 0, 0.15);
     background-color: rgb(242, 243, 243);
-    color: rgba(0, 0, 0, 0.65);
   }
 }
 .checkbox-wrapper-2 {
