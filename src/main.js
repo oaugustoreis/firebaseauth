@@ -2,9 +2,6 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import {
-  getFirestore
-} from 'firebase/firestore'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -24,9 +21,6 @@ const firebaseConfig = {
   appId: "1:327697060475:web:f5c52a3b7b508be9da48de",
   measurementId: "G-ND52L1T636"
 };
-
-// Initialize Firebase
-// const 
 const app = createApp(App)
 initializeApp(firebaseConfig);
 

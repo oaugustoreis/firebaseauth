@@ -44,11 +44,14 @@ import {
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
+
 const auth = getAuth();
 const router = useRouter();
 const errorMsg = ref();
 const email = ref("");
 const password = ref("");
+
+
 const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then((data) => {
@@ -64,19 +67,22 @@ const signIn = () => {
         errorMsg.value = "Email ou senha incorretos";
       }
     });
+
+  // const q = query(collection(db, "users"), orderBy("name"));
+  // onSnapshot(q, (snaps) => {
+  //   // Loop through documents in database
+  //   snaps.forEach((doc) => {
+  //     // Create an HTML entry for each document and add it to the chat
+  //     const entry = document.createElement("p");
+  //     entry.textContent = doc.data().name + ": " + doc.data().text;
+  //     guestbook.appendChild(entry);
+  //   });
+  // });
 };
 const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
-    if (auth2.isSignedIn.get()) {
-      var profile = auth2.currentUser.get().getBasicProfile();
-      console.log("ID: " + profile.getId());
-      console.log("Full Name: " + profile.getName());
-      console.log("Given Name: " + profile.getGivenName());
-      console.log("Family Name: " + profile.getFamilyName());
-      console.log("Image URL: " + profile.getImageUrl());
-      console.log("Email: " + profile.getEmail());
-    }
+    // alert("Loguei com google")
     router.push("/feed");
   });
 };

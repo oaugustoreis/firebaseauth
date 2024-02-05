@@ -66,6 +66,7 @@ const register = () => {
         timestamp: Date.now(),
         name: nome.value,
         userId: auth.currentUser.uid,
+        googleLogin:false
       });
       router.push("/feed");
     })
@@ -78,7 +79,13 @@ const register = () => {
 const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
-    console.log(result.user);
+    addDoc(collection(db, "users"), {
+        email: auth.currentUser.value,
+        timestamp: Date.now(),
+        name: auth.currentUser.value,
+        userId: auth.currentUser.uid,
+        googleLogin:true
+      });
     router.push("/feed");
   });
 };
