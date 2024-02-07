@@ -37,7 +37,7 @@
 </template>
 <script setup>
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import {
   query,
@@ -52,40 +52,38 @@ const isLogged = ref(false);
 let auth, userId;
 auth = getAuth();
 
-const userName = localStorage.getItem("nome");
+var userName = localStorage.getItem("nome");
 
-onMounted(() => {
-  let db;
-  db = getFirestore();
-  const q = query(collection(db, "users"), orderBy("name"));
-  onSnapshot(q, (snaps) => {
-    snaps.forEach((doc) => {
-      if (doc.data().userId) {
-        if (userId === doc.data().userId) {
-          console.log(doc.data().userId);
-          localStorage.setItem("nome", doc.data().name);
-        }
-      }
-    });
-  });
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      userId = user.uid;
-      console.log(userId);
-      isLogged.value = true;
-      if (user.displayName) {
-        localStorage.setItem("nome", user.displayName);
-      }
-    } else {
-      isLogged.value = false;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    isLogged.value = true;
+    userId = user.uid;
+    if(user.displayName){
+      localStorage.setItem("nome",user.displayName );
     }
-  });
-  
+    console.log(userId);
+    let db;
+    db = getFirestore();
+    const q = query(collection(db, "users"), orderBy("name"));
+    onSnapshot(q, (snaps) => {
+      snaps.forEach((doc) => {
+        if (userId === doc.data().userId) {
+          localStorage.setItem("nome", doc.data().name);
+
+          // location.reload();
+        }
+      });
+    });
+  } else {
+    isLogged.value = false;
+  }
 });
 console.log(userName);
 const signOutbt = () => {
   signOut(auth).then(() => {
     router.push("/");
+    localStorage.removeItem("nome");
+    location.reload();
   });
 };
 </script>

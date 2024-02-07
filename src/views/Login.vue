@@ -44,7 +44,6 @@ import {
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
-
 const auth = getAuth();
 const router = useRouter();
 const errorMsg = ref();
@@ -56,6 +55,9 @@ const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then((data) => {
       router.push("/feed");
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     })
     .catch((error) => {
       if (
@@ -66,17 +68,6 @@ const signIn = () => {
         errorMsg.value = "Email ou senha incorretos";
       }
     });
-
-  // const q = query(collection(db, "users"), orderBy("name"));
-  // onSnapshot(q, (snaps) => {
-  //   // Loop through documents in database
-  //   snaps.forEach((doc) => {
-  //     // Create an HTML entry for each document and add it to the chat
-  //     const entry = document.createElement("p");
-  //     entry.textContent = doc.data().name;
-  //     guestbook.appendChild(entry);
-  //   });
-  // });
 };
 const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
