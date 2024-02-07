@@ -37,7 +37,7 @@
             Concordo com os <a href="">Termos e Condições</a></span
           >
         </div>
-        <button class="btn" @click="register" >Cadastrar</button>
+        <button class="button-74" @click="register" >Cadastrar</button>
       </div>
     </div>
   </div>
@@ -81,7 +81,15 @@ const register = () => {
 const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
+    addDoc(collection(db, "users"), {
+        timestamp: Date.now(),
+        email:auth.currentUser.email,
+        name:auth.currentUser.displayName,
+        userId: auth.currentUser.uid,
+        googleLogin:true
+      });
     router.push("/feed");
+    
   });
 };
 </script>
@@ -116,21 +124,7 @@ const signInGoogle = () => {
   padding: 10px;
 }
 
-.btn {
-  text-transform: uppercase;
-  color: var(--color1);
-  height: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 10px;
-  border: 2px solid var(--color1);
-  background-color: var(--color3);
-  transition: 0.2s;
-  cursor: pointer;
-  &:hover {
-    background: #f3c052;
-  }
-}
+
 span {
   margin: 10px 0;
   i {

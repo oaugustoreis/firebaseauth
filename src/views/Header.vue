@@ -6,15 +6,30 @@
         <router-link to="/login">Login</router-link>
         <router-link to="/feed">Feed</router-link>
         <router-link to="/registration">Registration</router-link>
-        <section id="guestbook"></section>
-        <div class="user" v-if="isLogged">
-          <i class="fa-solid fa-angle-left"></i>
-          <p id="namefield">{{ name }}{{ googleUserName }}</p>
-
-          <!-- <img  class="user-img-profile" src=""  alt="img"> -->
-          <i class="fa-solid fa-circle-user"></i>
-
-          <button @click="signOutbt" role="button">logout</button>
+        <div class="dropdown" v-if="isLogged">
+          <div class="center user">
+            <i class="fa-solid fa-angle-left"></i>
+            <p id="namefield">{{ userName }}</p>
+            <!-- <img  class="user-img-profile" src=""  alt="img"> -->
+            <i class="fa-solid fa-circle-user"></i>
+          </div>
+          <div class="dropdown-content">
+            <div class="center">
+              <router-link to="/" class="dropdown-opt center">Home</router-link>
+              <router-link to="/login" class="dropdown-opt center"
+                >Login</router-link
+              >
+              <router-link to="/feed" class="dropdown-opt center"
+                >Feed</router-link
+              >
+              <router-link to="/registration" class="dropdown-opt center"
+                >Registration</router-link
+              >
+            </div>
+            <button class="button-74 logout" @click="signOutbt" role="button">
+              Sair
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -22,7 +37,7 @@
 </template>
 <script setup>
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {
   query,
@@ -34,39 +49,45 @@ import {
 
 const router = useRouter();
 const isLogged = ref(false);
-var googleUserName = "";
-let auth, userId,name;
-
+let auth, userId;
 auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    userId = user.uid;
-    googleUserName = user.displayName;
-    isLogged.value = true;
-  } else {
-    isLogged.value = false;
-  }
-});
 
+const userName = localStorage.getItem("nome");
+
+onMounted(() => {
+  let db;
+  db = getFirestore();
+  const q = query(collection(db, "users"), orderBy("name"));
+  onSnapshot(q, (snaps) => {
+    snaps.forEach((doc) => {
+      if (doc.data().userId) {
+        if (userId === doc.data().userId) {
+          console.log(doc.data().userId);
+          localStorage.setItem("nome", doc.data().name);
+        }
+      }
+    });
+  });
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      userId = user.uid;
+      console.log(userId);
+      isLogged.value = true;
+      if (user.displayName) {
+        localStorage.setItem("nome", user.displayName);
+      }
+    } else {
+      isLogged.value = false;
+    }
+  });
+  
+});
+console.log(userName);
 const signOutbt = () => {
   signOut(auth).then(() => {
-
     router.push("/");
   });
 };
-
-let db;
-db = getFirestore();
-
-const q = query(collection(db, "users"), orderBy("name"));
-onSnapshot(q, (snaps) => {
-  snaps.forEach((doc) => {
-    if (userId === doc.data().userId) {
-      name = doc.data().name;
-      console.log(name)
-    }
-  });
-});
 </script>
 
 <style lang="scss" scoped>
@@ -103,9 +124,47 @@ onSnapshot(q, (snaps) => {
   i:first-child {
     font-size: 20px;
   }
+}
+.dropdown {
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  display: inline-block;
+
   &:hover {
     background-color: rgb(242, 243, 243);
   }
+}
+.dropdown-content {
+  display: none;
+  padding: 10px;
+  position: absolute;
+  background-color: rgb(242, 243, 243);
+  width: calc(100% - 20px);
+  z-index: 1;
+  border-radius: 0 0 10px 10px;
+
+  .logout {
+    line-height: 0;
+    height: 35px;
+  }
+}
+.dropdown-opt {
+  width: 80%;
+  transition: 0.2s;
+  border-radius: 10px;
+  padding: 10px;
+  &:hover {
+    background-color: rgb(255, 255, 255);
+  }
+}
+.dropdown-opt:last-child {
+  margin-bottom: 10px;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
 }
 // .user-img-profile{
 //   margin: 0 10px;
