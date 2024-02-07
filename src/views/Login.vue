@@ -50,7 +50,7 @@ const router = useRouter();
 const errorMsg = ref();
 const email = ref("");
 const password = ref("");
-
+// const guestbook = document.getElementById('guestbook');
 
 const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
@@ -58,7 +58,6 @@ const signIn = () => {
       router.push("/feed");
     })
     .catch((error) => {
-      console.log(error.code);
       if (
         error.code == "auth/invalid-password" ||
         error.code == "auth/invalid-email" ||
@@ -74,7 +73,7 @@ const signIn = () => {
   //   snaps.forEach((doc) => {
   //     // Create an HTML entry for each document and add it to the chat
   //     const entry = document.createElement("p");
-  //     entry.textContent = doc.data().name + ": " + doc.data().text;
+  //     entry.textContent = doc.data().name;
   //     guestbook.appendChild(entry);
   //   });
   // });

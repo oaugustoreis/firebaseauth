@@ -4,25 +4,25 @@
       <div class="center">
         <div class="center">
           <h1>Crie sua conta</h1>
-          <p>E faça seu pedido muito mais rápido</p>
+          <p id="teste">E faça seu pedido muito mais rápido</p>
         </div>
         <div class="backfield">
           <span>Nome:</span>
-          <input
+          <input id="input-alert"
             class="fields"
             type="text"
             v-model="nome"
             placeholder="Digite seu nome..."
           />
           <span>Email:</span>
-          <input
+          <input id="input-alert"
             class="fields"
             type="text"
             v-model="email"
             placeholder="Email..."
           />
           <span>Senha:</span>
-          <input
+          <input id="input-alert"
             class="fields"
             type="password"
             v-model="password"
@@ -37,7 +37,7 @@
             Concordo com os <a href="">Termos e Condições</a></span
           >
         </div>
-        <button class="btn" @click="register">Cadastrar</button>
+        <button class="btn" @click="register" >Cadastrar</button>
       </div>
     </div>
   </div>
@@ -59,6 +59,12 @@ let db;
 db = getFirestore();
 
 const register = () => {
+  if (!nome.value || !email.value || !password.value) {
+    // alert("Por favor, preencha todos os campos");
+    document.getElementById("teste").textContent = "Por favor, preencha todos os campos";
+    document.getElementById("teste").style.color = "red";
+    return;
+  }
   createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((data) => {
       addDoc(collection(db, "users"), {
@@ -70,22 +76,11 @@ const register = () => {
       });
       router.push("/feed");
     })
-    .catch((error) => {
-      console.log(error.code);
-      alert(error.message);
-    });
 };
 
 const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
-    addDoc(collection(db, "users"), {
-        email: auth.currentUser.value,
-        timestamp: Date.now(),
-        name: auth.currentUser.value,
-        userId: auth.currentUser.uid,
-        googleLogin:true
-      });
     router.push("/feed");
   });
 };

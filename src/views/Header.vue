@@ -6,9 +6,11 @@
         <router-link to="/login">Login</router-link>
         <router-link to="/feed">Feed</router-link>
         <router-link to="/registration">Registration</router-link>
+        <section id="guestbook"></section>
         <div class="user" v-if="isLogged">
           <i class="fa-solid fa-angle-left"></i>
-          <p id="namefield">{{ googleUserName }}{{ displayUserName }}</p>
+          <p id="namefield">{{ name }}{{ googleUserName }}</p>
+
           <!-- <img  class="user-img-profile" src=""  alt="img"> -->
           <i class="fa-solid fa-circle-user"></i>
 
@@ -32,12 +34,13 @@ import {
 
 const router = useRouter();
 const isLogged = ref(false);
-var displayUserName = ref("");
 var googleUserName = "";
-let auth
-auth=getAuth()
+let auth, userId,name;
+
+auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    userId = user.uid;
     googleUserName = user.displayName;
     isLogged.value = true;
   } else {
@@ -47,9 +50,23 @@ onAuthStateChanged(auth, (user) => {
 
 const signOutbt = () => {
   signOut(auth).then(() => {
+
     router.push("/");
   });
 };
+
+let db;
+db = getFirestore();
+
+const q = query(collection(db, "users"), orderBy("name"));
+onSnapshot(q, (snaps) => {
+  snaps.forEach((doc) => {
+    if (userId === doc.data().userId) {
+      name = doc.data().name;
+      console.log(name)
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>
