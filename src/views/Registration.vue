@@ -38,6 +38,9 @@
           >
         </div>
         <button class="button-74" @click="register" >Cadastrar</button>
+        <router-link to="/" class="dropdown-opt center router-link"
+          >Ou entre na sua Conta</router-link
+        >
       </div>
     </div>
   </div>

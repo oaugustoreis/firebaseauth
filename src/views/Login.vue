@@ -29,6 +29,9 @@
           <i class="fa-brands fa-google"></i>CONECTE COM GOOGLE
         </button>
         <button class="button-74" @click="signIn">Entrar</button>
+        <router-link to="/cadastro" class="dropdown-opt center router-link"
+          >Ou Crie sua Conta</router-link
+        >
       </div>
     </div>
   </div>
@@ -57,7 +60,7 @@ const signIn = () => {
       router.push("/home");
       setTimeout(() => {
         location.reload();
-      },500);
+      }, 500);
     })
     .catch((error) => {
       if (
@@ -75,8 +78,8 @@ const signInGoogle = () => {
     // alert("Loguei com google")
     router.push("/home");
     setTimeout(() => {
-        location.reload();
-      },500);
+      location.reload();
+    }, 500);
   });
 };
 </script>
@@ -85,7 +88,6 @@ const signInGoogle = () => {
 
 
 <style lang="scss" scoped>
-
 .fade-in-image {
   animation: fadeIn 0.5s;
 }
