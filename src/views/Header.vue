@@ -1,9 +1,7 @@
 <template>
   <nav>
-    <div class="header center" v-show="isLogged">
-      <div class="header-inner">
-        <router-link class="router-hover" to="/home">Cardapio</router-link>
-        <router-link class="router-hover"  to="/home">Meus Pedidos</router-link>
+    <div class="header " v-if="isLogged" >
+      <div class="header-inner center">
         <div class="dropdown" v-if="isLogged">
           <div class="center user">
             <i class="fa-solid fa-angle-left"></i>
@@ -13,11 +11,11 @@
           </div>
           <div class="dropdown-content">
             <div class="center">
-              <router-link to="/" class="dropdown-opt center"
-                >Minha Conta</router-link
+              <router-link to="/Home" class="dropdown-opt center"
+                >Cardápio</router-link
               >
-              <router-link to="/" class="dropdown-opt center"
-                >Meus Dados</router-link
+              <router-link to="/minhaconta" class="dropdown-opt center"
+                >Minha Conta</router-link
               >
               <router-link to="/" class="dropdown-opt center"
                 >Gorjeta</router-link
@@ -94,16 +92,11 @@ const signOutbt = () => {
   }
 }
 .header {
+  padding: 10px;
+  border-radius:10px ;
   background-color: white;
-  width: 100vw;
-  border-bottom: 2px solid var(--color1);
-  height: 60px;
-}
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 50%;
+  width: 300px;
+  height: 660px;
 }
 .user {
   width: auto;

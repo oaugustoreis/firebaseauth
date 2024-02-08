@@ -5,87 +5,23 @@
         <div class="center">
           <h1>Entre na sua conta</h1>
           <p>E acesse seus pedidos favoritos</p>
-          <div v-if="errorMsg" class="fade-in-image">
-            <p class="center errorMsg">{{ errorMsg }}</p>
-          </div>
         </div>
-        <div class="backfield">
-          <span>Email:</span>
-          <input
-            class="fields"
-            type="text"
-            v-model="email"
-            placeholder="Email..."
-          />
-          <span>Senha:</span>
-          <input
-            class="fields"
-            type="password"
-            v-model="password"
-            placeholder="Senha..."
-          />
-        </div>
-        <button class="google-btn center" @click="signInGoogle">
-          <i class="fa-brands fa-google"></i>CONECTE COM GOOGLE
-        </button>
-        <button class="button-74" @click="signIn">Entrar</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
-const auth = getAuth();
-const router = useRouter();
-const errorMsg = ref();
-const email = ref("");
-const password = ref("");
-// const guestbook = document.getElementById('guestbook');
-
-const signIn = () => {
-  signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
-      router.push("/home");
-      setTimeout(() => {
-        location.reload();
-      },500);
-    })
-    .catch((error) => {
-      if (
-        error.code == "auth/invalid-password" ||
-        error.code == "auth/invalid-email" ||
-        error.code == "auth/invalid-credential"
-      ) {
-        errorMsg.value = "Email ou senha incorretos";
-      }
-    });
-};
-const signInGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(getAuth(), provider).then((result) => {
-    // alert("Loguei com google")
-    router.push("/home");
-    setTimeout(() => {
-        location.reload();
-      },500);
-  });
-};
 </script>
 
 
 
 
 <style lang="scss" scoped>
-
+* {
+  transition: 0.4s;
+  color: var(--color1);
+}
 .fade-in-image {
   animation: fadeIn 0.5s;
 }
