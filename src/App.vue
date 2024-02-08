@@ -6,8 +6,6 @@
 <script setup>
 import Header from "./views/Header.vue";
 
-import { ref, watch  } from "vue";
-
 
 
 </script>

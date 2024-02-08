@@ -74,7 +74,10 @@ const register = () => {
         userId: auth.currentUser.uid,
         googleLogin:false
       });
-      router.push("/feed");
+      router.push("/home");
+      setTimeout(() => {
+        location.reload();
+      },500);
     })
 };
 
@@ -88,7 +91,10 @@ const signInGoogle = () => {
         userId: auth.currentUser.uid,
         googleLogin:true
       });
-    router.push("/feed");
+    router.push("/home");
+    setTimeout(() => {
+        location.reload();
+      },500);
     
   });
 };

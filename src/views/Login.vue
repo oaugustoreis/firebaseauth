@@ -1,5 +1,5 @@
 <template>
-  <div class="mg-auto">
+  <div class=" center full">
     <div class="login center">
       <div class="center">
         <div class="center">
@@ -54,10 +54,10 @@ const password = ref("");
 const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then((data) => {
-      router.push("/feed");
+      router.push("/home");
       setTimeout(() => {
         location.reload();
-      }, 1000);
+      },500);
     })
     .catch((error) => {
       if (
@@ -73,7 +73,10 @@ const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
     // alert("Loguei com google")
-    router.push("/feed");
+    router.push("/home");
+    setTimeout(() => {
+        location.reload();
+      },500);
   });
 };
 </script>

@@ -1,9 +1,9 @@
 @import './base.css';
 #app{
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  justify-content: center;
 }
 a,
 .green {
@@ -11,13 +11,15 @@ a,
   color: rgb(114, 116, 115);
   transition: 0.4s;
 }
-
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
-
+.full{
+  height: 100%;
+  width: 100vw;
+}
 @media (min-width: 1024px) {
   body {
     display: flex;

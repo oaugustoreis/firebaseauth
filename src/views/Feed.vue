@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-center">
+  <div class="full">
     <h1>Feed</h1>
   </div>
 </template>

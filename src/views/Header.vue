@@ -1,11 +1,9 @@
 <template>
   <nav>
-    <div class="header center">
+    <div class="header center" v-show="isLogged">
       <div class="header-inner">
-        <router-link to="/">Home</router-link>
-        <router-link to="/login">Login</router-link>
-        <router-link to="/feed">Feed</router-link>
-        <router-link to="/registration">Registration</router-link>
+        <router-link class="router-hover" to="/home">Cardapio</router-link>
+        <router-link class="router-hover"  to="/home">Meus Pedidos</router-link>
         <div class="dropdown" v-if="isLogged">
           <div class="center user">
             <i class="fa-solid fa-angle-left"></i>
@@ -15,15 +13,14 @@
           </div>
           <div class="dropdown-content">
             <div class="center">
-              <router-link to="/" class="dropdown-opt center">Home</router-link>
-              <router-link to="/login" class="dropdown-opt center"
-                >Login</router-link
+              <router-link to="/" class="dropdown-opt center"
+                >Minha Conta</router-link
               >
-              <router-link to="/feed" class="dropdown-opt center"
-                >Feed</router-link
+              <router-link to="/" class="dropdown-opt center"
+                >Meus Dados</router-link
               >
-              <router-link to="/registration" class="dropdown-opt center"
-                >Registration</router-link
+              <router-link to="/" class="dropdown-opt center"
+                >Gorjeta</router-link
               >
             </div>
             <button class="button-74 logout" @click="signOutbt" role="button">
@@ -37,7 +34,7 @@
 </template>
 <script setup>
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {
   query,
@@ -58,8 +55,8 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     isLogged.value = true;
     userId = user.uid;
-    if(user.displayName){
-      localStorage.setItem("nome",user.displayName );
+    if (user.displayName) {
+      localStorage.setItem("nome", user.displayName);
     }
     console.log(userId);
     let db;
@@ -69,8 +66,6 @@ onAuthStateChanged(auth, (user) => {
       snaps.forEach((doc) => {
         if (userId === doc.data().userId) {
           localStorage.setItem("nome", doc.data().name);
-
-          // location.reload();
         }
       });
     });
@@ -83,12 +78,21 @@ const signOutbt = () => {
   signOut(auth).then(() => {
     router.push("/");
     localStorage.removeItem("nome");
-    location.reload();
+    setTimeout(() => {
+        location.reload();
+      },500);
   });
 };
 </script>
 
 <style lang="scss" scoped>
+.router-hover{
+  padding: 5px 10px ;
+  border-radius: 10px;
+  &:hover {
+    background-color: rgb(242, 243, 243);
+  }
+}
 .header {
   background-color: white;
   width: 100vw;
@@ -136,6 +140,7 @@ const signOutbt = () => {
 }
 .dropdown-content {
   display: none;
+
   padding: 10px;
   position: absolute;
   background-color: rgb(242, 243, 243);
@@ -149,6 +154,7 @@ const signOutbt = () => {
   }
 }
 .dropdown-opt {
+  color: var(--color1);
   width: 80%;
   transition: 0.2s;
   border-radius: 10px;
