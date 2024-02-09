@@ -1,10 +1,98 @@
 <template>
   <div class="center">
-    <div class="login center">
-      <div class="center">
-        <div class="center">
-          <h1>Entre na sua conta</h1>
-          <p>E acesse seus pedidos favoritos</p>
+    <div class="account-info">
+      <div class="center account-info-top">
+        <h1>Augusto Reis</h1>
+        <p>ask5.fnr@gmail.com</p>
+        <p><a href="">Trocar senha</a></p>
+        <hr class="center"/>
+        
+      </div>
+      <p class="title">Últimos Pedidos</p>
+      <div class="container1">
+        <div class="container-pedidos">
+          <div class="center-row">
+            <p>05/04/2024</p>
+            <p>R$48,50</p>
+          </div>
+          <div>
+            <p>1x Prato Top de Alguma coisa</p>
+            <p>2x Outra coisa</p>
+          </div>
+          <div class="center-row">
+            <button class="button-74 button-pedidos">Ver Pedido</button>
+            <button class="button-74 button-pedidos">Pedir de novo</button>
+          </div>
+        </div>
+        <div class="container-pedidos">
+          <div class="center-row">
+            <p>05/04/2024</p>
+            <p>R$48,50</p>
+          </div>
+          <div>
+            <p>1x Prato Top de Alguma coisa</p>
+            <p>2x Outra coisa</p>
+          </div>
+          <div class="center-row">
+            <button class="button-74 button-pedidos">Ver Pedido</button>
+            <button class="button-74 button-pedidos">Pedir de novo</button>
+          </div>
+        </div>
+        <div class="container-pedidos">
+          <div class="center-row">
+            <p>05/04/2024</p>
+            <p>R$48,50</p>
+          </div>
+          <div>
+            <p>1x Prato Top de Alguma coisa</p>
+            <p>2x Outra coisa</p>
+          </div>
+          <div class="center-row">
+            <button class="button-74 button-pedidos">Ver Pedido</button>
+            <button class="button-74 button-pedidos">Pedir de novo</button>
+          </div>
+        </div>
+        <div class="container-pedidos">
+          <div class="center-row">
+            <p>05/04/2024</p>
+            <p>R$48,50</p>
+          </div>
+          <div>
+            <p>1x Prato Top de Alguma coisa</p>
+            <p>2x Outra coisa</p>
+          </div>
+          <div class="center-row">
+            <button class="button-74 button-pedidos">Ver Pedido</button>
+            <button class="button-74 button-pedidos">Pedir de novo</button>
+          </div>
+        </div>
+        <div class="container-pedidos">
+          <div class="center-row">
+            <p>05/04/2024</p>
+            <p>R$48,50</p>
+          </div>
+          <div>
+            <p>1x Prato Top de Alguma coisa</p>
+            <p>2x Outra coisa</p>
+          </div>
+          <div class="center-row">
+            <button class="button-74 button-pedidos">Ver Pedido</button>
+            <button class="button-74 button-pedidos">Pedir de novo</button>
+          </div>
+        </div>
+        <div class="container-pedidos">
+          <div class="center-row">
+            <p>05/04/2024</p>
+            <p>R$48,50</p>
+          </div>
+          <div>
+            <p>1x Prato Top de Alguma coisa</p>
+            <p>2x Outra coisa</p>
+          </div>
+          <div class="center-row">
+            <button class="button-74 button-pedidos">Ver Pedido</button>
+            <button class="button-74 button-pedidos">Pedir de novo</button>
+          </div>
         </div>
       </div>
     </div>
@@ -20,99 +108,87 @@
 <style lang="scss" scoped>
 * {
   transition: 0.4s;
-  color: var(--color1);
 }
-.fade-in-image {
-  animation: fadeIn 0.5s;
+hr {
+  border: 1px solid var(--color1);
+  margin-top: 5px;
+  width: 73%;
 }
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+  overflow: auto;
+  
 }
-.errorMsg {
-  padding: 5px 10px;
-  width: fit-content;
-  font-size: 14px;
-  border-radius: 10px;
-  color: red;
+.title {
+  font-size: 16px;
+  margin-bottom: 5px;
+  align-self: self-start;
+  margin-left: 13%;
 }
 
+.container-pedidos {
+  margin-bottom: 10px;
+  width: 70%;
+  font-size: 16px;
+  padding: 0  10px 10px  10px;
+  align-items: start;
+  
+  border-radius: 10px;
+  &:hover{
+    background-color: var(--hover);
+  }
+}
 .center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.login {
-  padding: 10px 10px;
-  width: 500px;
+.button-pedidos {
+  width: auto;
+  line-height: 0;
+  height: 30px;
+  color: white;
+  font-size: 15px;
+  font-weight: 100;
+  &:last-child {
+    background-color: var(--color3);
+  }
+  &:first-child {
+    background-color: var(--color5);
+  }
+  &:hover {
+    background-color: white;
+    color: var(--color1);
+  }
+}
+.account-info { 
+  padding: 10px 0;
+  width: 520px;
   height: 548px;
   border: 2px solid var(--color1);
   border-radius: 10px;
   background-color: #fff;
+}
+.account-info-top {
+  line-height: 1.3;
   h1 {
     font-size: 40px;
     font-weight: 500;
   }
-}
-.backfield {
-  width: 70%;
-  font-size: 20px;
-  margin: 10px 0;
-}
-.fields {
-  border-radius: 10px;
-  width: 100%;
-  border: 1px solid var(--color1);
-  font-size: 14px;
-  background-color: #fff;
-  padding: 10px;
-}
-
-span {
-  margin: 10px 0;
-  i {
-    font-size: 10px;
-    color: var(--color4);
-    border-radius: 100%;
-    border: 3px solid var(--color1);
+  p,
+  a {
+    font-size: 20px;
   }
   a {
     color: var(--color4);
-  }
-}
-.google-btn {
-  flex-direction: row;
-  width: 70%;
-  align-items: center;
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-  box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.85);
-  cursor: pointer;
-  display: inline-flex;
-  font-size: 16px;
-  height: 30px;
-  margin: 0 0 10px 0;
-  font-weight: 600;
-  justify-content: center;
-  min-height: 3rem;
-  transition: 0.2s;
-  i {
-    border: none;
-    color: var(--color1);
-    margin-right: 10px;
-    font-size: 18px;
-  }
-  &:hover {
-    border-color: rgba(0, 0, 0, 0.15);
-    background-color: rgb(242, 243, 243);
+    &:hover {
+      background: none;
+      text-decoration: underline;
+    }
   }
 }
 </style>

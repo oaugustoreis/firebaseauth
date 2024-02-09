@@ -1,6 +1,6 @@
 <template>
     <nav>
-      <div class="header " v-if="isLogged" >
+      <div class="header " >
         <div class="header-inner center">
           <p>Filtros</p>
         </div>
@@ -8,56 +8,7 @@
     </nav>
   </template>
   <script setup>
-  import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
-  import { ref } from "vue";
-  import { useRouter } from "vue-router";
-  import {
-    query,
-    collection,
-    getFirestore,
-    orderBy,
-    onSnapshot,
-  } from "firebase/firestore";
   
-  const router = useRouter();
-  const isLogged = ref(false);
-  let auth, userId;
-  auth = getAuth();
-  
-  var userName = localStorage.getItem("nome");
-  
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLogged.value = true;
-      userId = user.uid;
-      if (user.displayName) {
-        localStorage.setItem("nome", user.displayName);
-      }
-      console.log(userId);
-      let db;
-      db = getFirestore();
-      const q = query(collection(db, "users"), orderBy("name"));
-      onSnapshot(q, (snaps) => {
-        snaps.forEach((doc) => {
-          if (userId === doc.data().userId) {
-            localStorage.setItem("nome", doc.data().name);
-          }
-        });
-      });
-    } else {
-      isLogged.value = false;
-    }
-  });
-  console.log(userName);
-  const signOutbt = () => {
-    signOut(auth).then(() => {
-      router.push("/");
-      localStorage.removeItem("nome");
-      setTimeout(() => {
-          location.reload();
-        },500);
-    });
-  };
   </script>
   
   <style lang="scss" scoped>
@@ -72,7 +23,7 @@
     padding: 10px;
     border-radius:10px ;
     background-color: white;
-    width: 300px;
+    width: 250px;
     height: 660px;
   }
   .user {

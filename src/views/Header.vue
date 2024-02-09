@@ -56,7 +56,7 @@ onAuthStateChanged(auth, (user) => {
     if (user.displayName) {
       localStorage.setItem("nome", user.displayName);
     }
-    console.log(userId);
+    // console.log(userId);
     let db;
     db = getFirestore();
     const q = query(collection(db, "users"), orderBy("name"));
@@ -71,7 +71,7 @@ onAuthStateChanged(auth, (user) => {
     isLogged.value = false;
   }
 });
-console.log(userName);
+// console.log(userName);
 const signOutbt = () => {
   signOut(auth).then(() => {
     router.push("/");
@@ -95,7 +95,7 @@ const signOutbt = () => {
   padding: 10px;
   border-radius:10px ;
   background-color: white;
-  width: 300px;
+  width: 250px;
   height: 660px;
 }
 .user {
