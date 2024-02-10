@@ -2,7 +2,7 @@
   <nav>
     <div class="header " v-if="isLogged" >
       <div class="header-inner center">
-        <div class="dropdown" v-if="isLogged">
+        <div class="dropdown" >
           <div class="center user">
             <i class="fa-solid fa-angle-left"></i>
             <p id="namefield">{{ userName }}</p>
