@@ -1,12 +1,48 @@
+<script setup>
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { ref } from "vue";
+import {
+  query,
+  collection,
+  getFirestore,
+  doc,
+  getDoc,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
+
+const userName = ref(null);
+const userEmail = ref(null);
+let auth;
+auth = getAuth();
+const db = getFirestore();
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log()
+    const q = query(collection(db, "users"), orderBy("name"));
+    onSnapshot(q, (snaps) => {
+      snaps.forEach((doc) => {
+        if (user.uid === doc.data().userId) {
+          userName.value = doc.data().name;
+          userEmail.value = doc.data().email;
+        }
+      });
+    });
+  }
+});
+</script>
+
+
+
 <template>
   <div class="center">
     <div class="account-info">
       <div class="center account-info-top">
-        <h1>Augusto Reis</h1>
-        <p>ask5.fnr@gmail.com</p>
+        <h1>{{ userName }}</h1>
+        <p>{{ userEmail }}</p>
         <p><a href="">Trocar senha</a></p>
-        <hr class="center"/>
-        
+        <hr class="center" />
       </div>
       <p class="title">Últimos Pedidos</p>
       <div class="container1">
@@ -99,8 +135,6 @@
   </div>
 </template>
 
-<script setup>
-</script>
 
 
 
@@ -120,7 +154,6 @@ hr {
   align-items: center;
   height: 400px;
   overflow: auto;
-  
 }
 .title {
   font-size: 16px;
@@ -133,11 +166,11 @@ hr {
   margin-bottom: 10px;
   width: 70%;
   font-size: 16px;
-  padding: 0  10px 10px  10px;
+  padding: 0 10px 10px 10px;
   align-items: start;
-  
+
   border-radius: 10px;
-  &:hover{
+  &:hover {
     background-color: var(--hover);
   }
 }
@@ -165,7 +198,7 @@ hr {
     color: var(--color1);
   }
 }
-.account-info { 
+.account-info {
   padding: 10px 0;
   width: 520px;
   height: 548px;
@@ -176,7 +209,7 @@ hr {
 .account-info-top {
   line-height: 1.3;
   h1 {
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 500;
   }
   p,

@@ -42,28 +42,23 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
+const userName = ref(null);
 const router = useRouter();
 const isLogged = ref(false);
-let auth, userId;
+let auth;
 auth = getAuth();
-
-var userName = localStorage.getItem("nome");
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     isLogged.value = true;
-    userId = user.uid;
-    if (user.displayName) {
-      localStorage.setItem("nome", user.displayName);
-    }
-    // console.log(userId);
+    userName.value=user.displayName
     let db;
     db = getFirestore();
     const q = query(collection(db, "users"), orderBy("name"));
     onSnapshot(q, (snaps) => {
       snaps.forEach((doc) => {
-        if (userId === doc.data().userId) {
-          localStorage.setItem("nome", doc.data().name);
+        if (user.uid === doc.data().userId) {
+          userName.value=doc.data().name
         }
       });
     });
@@ -71,14 +66,9 @@ onAuthStateChanged(auth, (user) => {
     isLogged.value = false;
   }
 });
-// console.log(userName);
 const signOutbt = () => {
   signOut(auth).then(() => {
     router.push("/");
-    localStorage.removeItem("nome");
-    setTimeout(() => {
-        location.reload();
-      },500);
   });
 };
 </script>

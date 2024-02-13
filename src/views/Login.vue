@@ -52,15 +52,11 @@ const router = useRouter();
 const errorMsg = ref();
 const email = ref("");
 const password = ref("");
-// const guestbook = document.getElementById('guestbook');
 
 const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then((data) => {
       router.push("/home");
-      setTimeout(() => {
-        location.reload();
-      }, 500);
     })
     .catch((error) => {
       if (
@@ -75,11 +71,7 @@ const signIn = () => {
 const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
-    // alert("Loguei com google")
     router.push("/home");
-    setTimeout(() => {
-      location.reload();
-    }, 500);
   });
 };
 </script>
