@@ -19,6 +19,8 @@ const db = getFirestore();
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
+    userName.value = user.displayName;
+    userEmail.value = user.email;
     console.log()
     const q = query(collection(db, "users"), orderBy("name"));
     onSnapshot(q, (snaps) => {
