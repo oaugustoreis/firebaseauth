@@ -5,8 +5,6 @@ import {
   query,
   collection,
   getFirestore,
-  doc,
-  getDoc,
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
@@ -16,12 +14,14 @@ const userEmail = ref(null);
 let auth;
 auth = getAuth();
 const db = getFirestore();
+const items = ref([]);
 
+// Consulta info user
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     userName.value = user.displayName;
     userEmail.value = user.email;
-    console.log()
+    console.log();
     const q = query(collection(db, "users"), orderBy("name"));
     onSnapshot(q, (snaps) => {
       snaps.forEach((doc) => {
@@ -31,11 +31,24 @@ onAuthStateChanged(auth, async (user) => {
         }
       });
     });
+    // consulta pedidos
+    const p = query(collection(db, "pedidos"), orderBy("userId"));
+    onSnapshot(p, (snaps) => {
+      const newItems = [];
+      snaps.forEach((doc) => {
+        if (user.uid === doc.data().userId) {
+          newItems.push({
+            dataPedido: doc.data().data,
+            precoPedido: doc.data().price,
+            nomePedido: doc.data().nome,
+          });
+        }
+      });
+      items.value = newItems;
+    });
   }
 });
 </script>
-
-
 
 <template>
   <div class="center">
@@ -48,85 +61,18 @@ onAuthStateChanged(auth, async (user) => {
       </div>
       <p class="title">Últimos Pedidos</p>
       <div class="container1">
-        <div class="container-pedidos">
+        <div
+          class="container-pedidos"
+          v-for="(item, index) in items"
+          :key="index"
+        >
           <div class="center-row">
-            <p>05/04/2024</p>
-            <p>R$48,50</p>
+            <p>{{ item.dataPedido }}</p>
+            <p>R${{ item.precoPedido }}</p>
           </div>
-          <div>
-            <p>1x Prato Top de Alguma coisa</p>
-            <p>2x Outra coisa</p>
-          </div>
-          <div class="center-row">
-            <button class="button-74 button-pedidos">Ver Pedido</button>
-            <button class="button-74 button-pedidos">Pedir de novo</button>
-          </div>
-        </div>
-        <div class="container-pedidos">
-          <div class="center-row">
-            <p>05/04/2024</p>
-            <p>R$48,50</p>
-          </div>
-          <div>
-            <p>1x Prato Top de Alguma coisa</p>
-            <p>2x Outra coisa</p>
-          </div>
-          <div class="center-row">
-            <button class="button-74 button-pedidos">Ver Pedido</button>
-            <button class="button-74 button-pedidos">Pedir de novo</button>
-          </div>
-        </div>
-        <div class="container-pedidos">
-          <div class="center-row">
-            <p>05/04/2024</p>
-            <p>R$48,50</p>
-          </div>
-          <div>
-            <p>1x Prato Top de Alguma coisa</p>
-            <p>2x Outra coisa</p>
-          </div>
-          <div class="center-row">
-            <button class="button-74 button-pedidos">Ver Pedido</button>
-            <button class="button-74 button-pedidos">Pedir de novo</button>
-          </div>
-        </div>
-        <div class="container-pedidos">
-          <div class="center-row">
-            <p>05/04/2024</p>
-            <p>R$48,50</p>
-          </div>
-          <div>
-            <p>1x Prato Top de Alguma coisa</p>
-            <p>2x Outra coisa</p>
-          </div>
-          <div class="center-row">
-            <button class="button-74 button-pedidos">Ver Pedido</button>
-            <button class="button-74 button-pedidos">Pedir de novo</button>
-          </div>
-        </div>
-        <div class="container-pedidos">
-          <div class="center-row">
-            <p>05/04/2024</p>
-            <p>R$48,50</p>
-          </div>
-          <div>
-            <p>1x Prato Top de Alguma coisa</p>
-            <p>2x Outra coisa</p>
-          </div>
-          <div class="center-row">
-            <button class="button-74 button-pedidos">Ver Pedido</button>
-            <button class="button-74 button-pedidos">Pedir de novo</button>
-          </div>
-        </div>
-        <div class="container-pedidos">
-          <div class="center-row">
-            <p>05/04/2024</p>
-            <p>R$48,50</p>
-          </div>
-          <div>
-            <p>1x Prato Top de Alguma coisa</p>
-            <p>2x Outra coisa</p>
-          </div>
+          <p v-for="(element, index) in item.nomePedido" :key="index">
+            {{ element }}
+          </p>
           <div class="center-row">
             <button class="button-74 button-pedidos">Ver Pedido</button>
             <button class="button-74 button-pedidos">Pedir de novo</button>
@@ -136,10 +82,6 @@ onAuthStateChanged(auth, async (user) => {
     </div>
   </div>
 </template>
-
-
-
-
 
 <style lang="scss" scoped>
 * {
