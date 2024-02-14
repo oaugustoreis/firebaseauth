@@ -17,8 +17,8 @@
               <router-link to="/minhaconta" class="dropdown-opt center"
                 >Minha Conta</router-link
               >
-              <router-link to="/" class="dropdown-opt center"
-                >Gorjeta</router-link
+              <router-link to="/teste" class="dropdown-opt center"
+                >Teste Cadastro</router-link
               >
             </div>
             <button class="button-74 logout" @click="signOutbt" role="button">

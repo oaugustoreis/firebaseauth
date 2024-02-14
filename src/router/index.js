@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'Minha Conta',
       component: () => import('../views/MyAccount.vue')
     },
+    {
+      path: '/teste',
+      name: 'Teste de cadastro',
+      component: () => import('../views/cadastro.vue')
+    },
   ]
 })
 
