@@ -28,6 +28,7 @@ onAuthStateChanged(auth, async (user) => {
         if (user.uid === doc.data().userId) {
           userName.value = doc.data().name;
           userEmail.value = doc.data().email;
+          console.log(doc.id);
         }
       });
     });

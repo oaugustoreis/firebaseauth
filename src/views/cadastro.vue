@@ -11,7 +11,6 @@
             <input type="number" id="numberInput" placeholder="Enter number" />
             <input type="text" id="textInput" placeholder="Enter text" />
             <button @click="addPedidos">Add to Array</button>
-            
           </div>
           <br />
           <span>preco:</span>
@@ -25,32 +24,38 @@
 
 <script setup>
 import { ref } from "vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
 const db = getFirestore();
 const preco = ref("");
-// let pedidos = [];
-
+const userId = ref(null);
+const auth = getAuth();
 let pedidos = [];
-
+onAuthStateChanged(auth, async (user) => {
+  userId.value = user.uid;
+});
+// console.log(userId);
 const addPedidos = async () => {
   let textInput = document.getElementById("textInput").value;
   let numberInput = document.getElementById("numberInput").value;
-  var conca = numberInput + "x " +textInput
-  
+  var conca = numberInput + "x " + textInput;
+
   pedidos.push(conca);
   // Clear input fields
   document.getElementById("textInput").value = "";
   document.getElementById("numberInput").value = "";
-  pedidos.forEach(order => {
+  pedidos.forEach((order) => {
     console.log(order);
-});
-}
+  });
+};
+
+// pegar a doc ref do usuario pra
 const register = async () => {
   const date = {
     nome: pedidos,
     data: dataAtualFormatada(),
     price: preco.value,
-    userId: "Sm1s2f7uHNbLYZRk4rSCikAiv4C2",
+    userId: userId.value, //botar aqui
   };
 
   try {

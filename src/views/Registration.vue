@@ -8,21 +8,22 @@
         </div>
         <div class="backfield">
           <span>Nome:</span>
-          <input id="input-alert"
+          <input
+            id="input-alert"
             class="fields"
             type="text"
             v-model="nome"
             placeholder="Digite seu nome..."
           />
           <span>Email:</span>
-          <input id="input-alert"
+          <input
             class="fields"
             type="text"
             v-model="email"
             placeholder="Email..."
           />
           <span>Senha:</span>
-          <input id="input-alert"
+          <input
             class="fields"
             type="password"
             v-model="password"
@@ -37,7 +38,7 @@
             Concordo com os <a href="">Termos e Condições</a></span
           >
         </div>
-        <button class="button-74" @click="register" >Cadastrar</button>
+        <button class="button-74" @click="register">Cadastrar</button>
         <router-link to="/" class="dropdown-opt center router-link"
           >Ou entre na sua Conta</router-link
         >
@@ -47,10 +48,11 @@
 </template>
 
 <script setup>
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { signInGoogleF } from "../scripts/queryUser";
 
 const auth = getAuth();
 const router = useRouter();
@@ -64,43 +66,48 @@ db = getFirestore();
 const register = () => {
   if (!nome.value || !email.value || !password.value) {
     // alert("Por favor, preencha todos os campos");
-    document.getElementById("teste").textContent = "Por favor, preencha todos os campos";
+    document.getElementById("teste").textContent =
+      "Por favor, preencha todos os campos";
     document.getElementById("teste").style.color = "red";
     return;
   }
-  createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
+  createUserWithEmailAndPassword(auth, email.value, password.value).then(
+    (data) => {
       addDoc(collection(db, "users"), {
         email: email.value,
         timestamp: Date.now(),
         name: nome.value,
         userId: auth.currentUser.uid,
-        googleLogin:false
+        googleLogin: false,
       });
       router.push("/home");
       setTimeout(() => {
         location.reload();
-      },500);
-    })
+      }, 500);
+    }
+  );
+};
+const signInGoogle = () => {
+  signInGoogleF();
 };
 
-const signInGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(getAuth(), provider).then((result) => {
-    addDoc(collection(db, "users"), {
-        timestamp: Date.now(),
-        email:auth.currentUser.email,
-        name:auth.currentUser.displayName,
-        userId: auth.currentUser.uid,
-        googleLogin:true
-      });
-    router.push("/home");
-    setTimeout(() => {
-        location.reload();
-      },500);
-    
-  });
-};
+// const signInGoogle = () => {
+//   const provider = new GoogleAuthProvider();
+//   signInWithPopup(getAuth(), provider).then((result) => {
+//     addDoc(collection(db, "users"), {
+//         timestamp: Date.now(),
+//         email:auth.currentUser.email,
+//         name:auth.currentUser.displayName,
+//         userId: auth.currentUser.uid,
+//         googleLogin:true
+//       });
+//     router.push("/home");
+//     setTimeout(() => {
+//         location.reload();
+//       },500);
+
+//   });
+// };
 </script>
 
 
@@ -132,7 +139,6 @@ const signInGoogle = () => {
   background-color: #fff;
   padding: 10px;
 }
-
 
 span {
   margin: 10px 0;

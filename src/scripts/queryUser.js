@@ -1,28 +1,23 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {
-    query,
-    collection,
-    getFirestore,
-    orderBy,
-    onSnapshot,
-} from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {  addDoc, collection } from "firebase/firestore";
+import { useRouter } from "vue-router";
 
-var userId;
-let auth, userName;
+let auth;
 auth = getAuth();
 
 
-export function callUser(userId) {
-    console.log(userId);
-    let db;
-    db = getFirestore();
-    const q = query(collection(db, "users"), orderBy("name"));
-    onSnapshot(q, (snaps) => {
-        snaps.forEach((doc) => {
-            if (userId === doc.data().userId) {
-                userName = doc.data().name;
-                console.log(userName)
-            }
+
+export function signInGoogleF() {
+    const router = useRouter();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(getAuth(), provider).then((result) => {
+        addDoc(collection(db, "users"), {
+            timestamp: Date.now(),
+            email: auth.currentUser.email,
+            name: auth.currentUser.displayName,
+            userId: auth.currentUser.uid,
+            googleLogin: true
         });
+        router.push("/home");
     });
-}
+};

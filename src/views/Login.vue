@@ -40,12 +40,12 @@
 <script setup>
 import {
   getAuth,
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+
+import {signInGoogleF} from '../scripts/queryUser'
 
 const auth = getAuth();
 const router = useRouter();
@@ -69,11 +69,8 @@ const signIn = () => {
     });
 };
 const signInGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(getAuth(), provider).then((result) => {
-    router.push("/home");
-  });
-};
+  signInGoogleF()
+}
 </script>
 
 
