@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="card center">
+    <div class="card ">
       <!-- <div class="hover-info">
         <p>Arroz</p>
         <p>Farofa</p>
@@ -56,8 +56,7 @@ export default defineComponent({
 
   &:hover {
     background-color: var(--hover);
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    transform: scale(1.01);
   }
 }
 .hover-info {
