@@ -1,14 +1,21 @@
 <template>
   <div class="home">
-    <div class="card ">
-      <!-- <div class="hover-info">
-        <p>Arroz</p>
-        <p>Farofa</p>
-        <p>Pure de batata</p>
-        <p>Feijao</p>
-      </div> -->
+    <div class="card"  :key="item" v-for="item in 7">
       <div class="center">
-        <div class="img"></div>
+        <div class="img">
+          <img src="../assets/frango.jpg" alt="" />
+          <div class="details">
+            <div class="center">
+              <ul>
+                <p>Acompanha:</p>
+                <li>Arroz</li>
+                <li>Feijao</li>
+                <li>Pure de batata</li>
+                <li>Farofa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <h2 class="name">Carne na chapa a milanesa com arroz</h2>
         <p class="price">R$ 48,90</p>
         <button class="button-74 button-pedidos">Adicionar</button>
@@ -29,6 +36,24 @@ export default defineComponent({
 * {
   transition: 0.2s;
 }
+.details .center {
+  display: none;
+  transform: scale(0);
+}
+
+.details .center ul {
+  list-style: inside;
+  line-height: 1.1;
+  padding: 0;
+}
+
+.details .center ul li {
+  font-size: 16px;
+  color: var(--color1);
+  p{
+    font-size: 18px;
+  }
+}
 .home {
   width: calc(100vw / 2.5);
   height: calc(100vh - 220px);
@@ -40,14 +65,13 @@ export default defineComponent({
   grid-row-gap: 10px;
   align-items: start;
 }
-
 .card {
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 20px;
   width: 200px;
   transition: 0.2s;
- 
+
   h2 {
     text-align: center;
     font-weight: 400;
@@ -57,6 +81,13 @@ export default defineComponent({
   &:hover {
     background-color: var(--hover);
     transform: scale(1.01);
+    .details .center {
+      display: block;
+      transform: scale(1);
+    }
+    .img img {
+      display: none;
+    }
   }
 }
 .hover-info {
@@ -68,7 +99,11 @@ export default defineComponent({
   border-radius: 10px;
   width: 130px;
   height: 110px;
-  background-color: var(--color2);
+  img {
+    width: 130px;
+    height: 110px;
+    border-radius: 10px;
+  }
 }
 .name {
   margin-top: 0;
