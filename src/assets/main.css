@@ -1,9 +1,10 @@
 @import './base.css';
 
 #app {
+  margin: auto;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 80%;
   height: 100vh;
   justify-content: space-around;
 }

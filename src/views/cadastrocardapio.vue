@@ -3,18 +3,19 @@
     <div class="login center">
       <div class="center" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
         <div class="center">
-          <h1>Pedido na conta do usuario</h1>
+          <h1>Pedido no cardapio</h1>
         </div>
         <div class="backfield">
-          <span>Adicionar Pedidos:</span>
+          <span>Descricao/ingredientes:</span>
           <div class="arrayAdd">
-            <input type="number" id="numberInput" placeholder="Enter number" />
             <input type="text" id="textInput" placeholder="Enter text" />
             <button @click="addPedidos">Add to Array</button>
           </div>
           <br />
           <span>preco:</span>
           <input id="input-alert" class="fields" type="text" v-model="preco" />
+          <span>Nome do prato:</span>
+          <input id="input-alert" class="fields" type="text" v-model="nomePrato" />
         </div>
         <button class="button-74" @click="register">Cadastrar</button>
       </div>
@@ -28,67 +29,38 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
 const db = getFirestore();
 const preco = ref("");
+const nomePrato = ref("");
 const userId = ref(null);
 const auth = getAuth();
-let pedidos = [];
+let desc = [];
 onAuthStateChanged(auth, async (user) => {
   userId.value = user.uid;
 });
 
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
-// console.log(userId);
 const addPedidos = async () => {
   let textInput = document.getElementById("textInput").value;
-  let numberInput = document.getElementById("numberInput").value;
-  var conca = numberInput + "x " + textInput;
 
-  pedidos.push(conca);
-  // Clear input fields
+  desc.push(textInput);
   document.getElementById("textInput").value = "";
-  document.getElementById("numberInput").value = "";
-  pedidos.forEach((order) => {
-    console.log(order);
-  });
+  // desc.forEach((order) => {
+  //   console.log(order);
+  // });
 };
 
-// pegar a doc ref do usuario pra
 const register = async () => {
   const date = {
-    nome: pedidos,
-    data: dataAtualFormatada(),
+    nome: nomePrato.value,
     price: preco.value,
-    userId: userId.value, //botar aqui
+    desc:desc, 
   };
 
   try {
-    await addDoc(collection(db, "pedidos"), date);
-    console.log("Pedido adicionado com sucesso");
+    await addDoc(collection(db, "cardapio"), date);
+    alert("Pedido adicionado com sucesso");
   } catch (error) {
     console.error("Erro ao adicionar pedido: ", error);
   }
 };
-
-function dataAtualFormatada() {
-  var data = new Date(),
-    dia = data.getDate().toString(),
-    diaF = dia.length == 1 ? "0" + dia : dia,
-    mes = (data.getMonth() + 1).toString(),
-    mesF = mes.length == 1 ? "0" + mes : mes,
-    anoF = data.getFullYear();
-  return diaF + "/" + mesF + "/" + anoF;
-}
 </script>
 
 
@@ -110,7 +82,7 @@ function dataAtualFormatada() {
   display: flex;
 }
 .arrayAdd input:first-child {
-  width: 50px;
+  width: 150px;
 }
 .backfield {
   width: 70%;

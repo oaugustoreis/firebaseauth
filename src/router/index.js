@@ -28,6 +28,11 @@ const router = createRouter({
       name: 'Teste de cadastro',
       component: () => import('../views/cadastro.vue')
     },
+    {
+      path: '/testecardapio',
+      name: 'Teste de cadastro nocardapio',
+      component: () => import('../views/cadastrocardapio.vue')
+    },
   ]
 })
 

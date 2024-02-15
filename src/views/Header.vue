@@ -20,6 +20,9 @@
               <router-link to="/teste" class="dropdown-opt center"
                 >Teste Cadastro</router-link
               >
+              <router-link to="/testecardapio" class="dropdown-opt center"
+                >Teste Cardapio</router-link
+              >
             </div>
             <button class="button-74 logout" @click="signOutbt" role="button">
               Sair
