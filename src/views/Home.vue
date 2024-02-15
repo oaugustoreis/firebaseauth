@@ -1,56 +1,18 @@
 <template>
   <div class="home">
     <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">Carne na chapa a milanesa com arroz</h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">Frango a parmegiana com fritas</h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">Chambersburg</h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">
-        Carne na chapa a milanesa com arroz batata feijao e Coca cola Gratis
-      </h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">Carne na chapa a milanesa com arroz</h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">Frango a parmegiana com fritas</h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">Chambersburg</h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
-    </div>
-    <div class="card center">
-      <div class="img"></div>
-      <h2 class="name">
-        Carne na chapa a milanesa com arroz batata feijao e Coca cola Gratis
-      </h2>
-      <p class="price">R$ 48,90</p>
-      <button class="button-74 button-pedidos">Adicionar</button>
+      <!-- <div class="hover-info">
+        <p>Arroz</p>
+        <p>Farofa</p>
+        <p>Pure de batata</p>
+        <p>Feijao</p>
+      </div> -->
+      <div class="center">
+        <div class="img"></div>
+        <h2 class="name">Carne na chapa a milanesa com arroz</h2>
+        <p class="price">R$ 48,90</p>
+        <button class="button-74 button-pedidos">Adicionar</button>
+      </div>
     </div>
   </div>
 </template>
@@ -85,16 +47,24 @@ export default defineComponent({
   margin-bottom: 20px;
   width: 200px;
   transition: 0.2s;
+ 
   h2 {
     text-align: center;
     font-weight: 400;
     font-size: 16px;
   }
+
   &:hover {
     background-color: var(--hover);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
 }
-
+.hover-info {
+  width: 130px;
+  height: 110px;
+  z-index: 1;
+}
 .img {
   border-radius: 10px;
   width: 130px;
