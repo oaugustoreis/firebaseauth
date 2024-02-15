@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <div class="card"  :key="item" v-for="item in 7">
+    <div class="card" v-for="(item, index) in items"
+          :key="index" >
       <div class="center">
         <div class="img">
           <img src="../assets/frango.jpg" alt="" />
@@ -8,27 +9,46 @@
             <div class="center">
               <ul>
                 <p>Acompanha:</p>
-                <li>Arroz</li>
-                <li>Feijao</li>
-                <li>Pure de batata</li>
-                <li>Farofa</li>
+                <li v-for="(element, index) in item.descPedido" :key="index">
+           - {{ element }}
+          </li>
               </ul>
             </div>
           </div>
         </div>
-        <h2 class="name">Carne na chapa a milanesa com arroz</h2>
-        <p class="price">R$ 48,90</p>
+        <h2 class="name">{{ item.nomePedido }}</h2>
+        <p class="price">R${{ item.precoPedido }}</p>
         <button class="button-74 button-pedidos">Adicionar</button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import {
+  query,
+  collection,
+  getFirestore,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 
-export default defineComponent({
-  name: "Home",
+const db = getFirestore();
+const items = ref([]);
+
+// consulta pedidos
+const p = query(collection(db, "cardapio"), orderBy("nome"));
+onSnapshot(p, (snaps) => {
+  const newItems = [];
+  snaps.forEach((doc) => {
+    newItems.push({
+      descPedido: doc.data().desc,
+      precoPedido: doc.data().price,
+      nomePedido: doc.data().nome,
+    });
+  });
+  items.value = newItems;
 });
 </script>
 
@@ -37,12 +57,16 @@ export default defineComponent({
   transition: 0.2s;
 }
 .details .center {
+  p {
+    color: var(--color1);
+    font-size: 18px;
+  }
   display: none;
   transform: scale(0);
 }
 
 .details .center ul {
-  list-style: inside;
+  list-style: none;
   line-height: 1.1;
   padding: 0;
 }
@@ -50,9 +74,7 @@ export default defineComponent({
 .details .center ul li {
   font-size: 16px;
   color: var(--color1);
-  p{
-    font-size: 18px;
-  }
+  
 }
 .home {
   width: calc(100vw / 2.5);
