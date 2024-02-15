@@ -1,51 +1,36 @@
 <template>
-  <div class="home">
-    <div v-for="(item, index) in items" :key="index"
-         class="card">
-      <ItemCard :model-value="item" @add-to-cart="()=>insertItemToCart(item)"/>
+  <div class="center">
+    <div class="img">
+      <img alt="" src="../assets/frango.jpg"/>
+      <div class="details">
+        <div class="center">
+          <ul>
+            <p>Acompanha:</p>
+            <li v-for="(element, index) in item.descPedido" :key="index">
+              - {{ element }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+    <h2 class="name">{{ item.nomePedido }}</h2>
+    <p class="price">R${{ item.precoPedido }}</p>
+    <button class="button-74 button-pedidos" @click="emit('add-to-cart', item)">Adicionar</button>
   </div>
 </template>
-
 <script setup>
-import {onMounted, ref} from "vue";
-import {collection, getFirestore, onSnapshot, orderBy, query,} from "firebase/firestore";
-import ItemCard from "@/components/itemCard.vue";
+import {computed} from "vue";
 
-const db = getFirestore();
-const items = ref([]);
-const cart = ref([]);
-const initCartData = () => {
-  const data = localStorage.getItem("cart");
-  if (!data) {
-    localStorage.setItem("cart", JSON.stringify([]));
-  }
-}
-
-onMounted(() => {
-  initCartData();
+const emit = defineEmits(['update:model-value', 'add-to-cart'])
+const props = defineProps({
+  modelValue: Object
+})
+const item = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:model-value', value)
 })
 
-const insertItemToCart = (item) => {
-  cart.value.push(item);
-  localStorage.setItem("cart", JSON.stringify(cart.value));
-}
-
-// consulta pedidos
-const p = query(collection(db, "cardapio"), orderBy("nome"));
-onSnapshot(p, (snaps) => {
-  const newItems = [];
-  snaps.forEach((doc) => {
-    newItems.push({
-      descPedido: doc.data().desc,
-      precoPedido: doc.data().price,
-      nomePedido: doc.data().nome,
-    });
-  });
-  items.value = newItems;
-});
 </script>
-
 <style lang="scss" scoped>
 * {
   transition: 0.2s;
