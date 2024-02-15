@@ -76,7 +76,7 @@ export default defineComponent({
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 10px;
-  justify-items: self-start;
+  align-items: start;
 }
 
 .card {
