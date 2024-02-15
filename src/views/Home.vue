@@ -1,9 +1,54 @@
 <template>
   <div class="home">
     <div class="card center">
-      <div class="img">
-      </div>
+      <div class="img"></div>
       <h2 class="name">Carne na chapa a milanesa com arroz</h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">Frango a parmegiana com fritas</h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">Chambersburg</h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">
+        Carne na chapa a milanesa com arroz batata feijao e Coca cola Gratis
+      </h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">Carne na chapa a milanesa com arroz</h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">Frango a parmegiana com fritas</h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">Chambersburg</h2>
+      <p class="price">R$ 48,90</p>
+      <button class="button-74 button-pedidos">Adicionar</button>
+    </div>
+    <div class="card center">
+      <div class="img"></div>
+      <h2 class="name">
+        Carne na chapa a milanesa com arroz batata feijao e Coca cola Gratis
+      </h2>
       <p class="price">R$ 48,90</p>
       <button class="button-74 button-pedidos">Adicionar</button>
     </div>
@@ -19,7 +64,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-*{
+* {
   transition: 0.2s;
 }
 .home {
@@ -31,7 +76,7 @@ export default defineComponent({
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 10px;
-  justify-items: center;
+  justify-items: self-start;
 }
 
 .card {
@@ -40,21 +85,21 @@ export default defineComponent({
   margin-bottom: 20px;
   width: 200px;
   transition: 0.2s;
-  h2{
+  h2 {
     text-align: center;
     font-weight: 400;
     font-size: 16px;
   }
-  &:hover{
+  &:hover {
     background-color: var(--hover);
   }
 }
 
-.img{
+.img {
   border-radius: 10px;
-width: 150px;
-height: 150px;
-background-color: var(--color2);
+  width: 130px;
+  height: 110px;
+  background-color: var(--color2);
 }
 .name {
   margin-top: 0;
