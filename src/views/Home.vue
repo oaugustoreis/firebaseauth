@@ -5,7 +5,7 @@
       </div>
       <h2 class="name">Carne na chapa a milanesa com arroz</h2>
       <p class="price">R$ 48,90</p>
-      <button class="add-button">Adicionar</button>
+      <button class="button-74 button-pedidos">Adicionar</button>
     </div>
   </div>
 </template>
@@ -19,6 +19,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+*{
+  transition: 0.2s;
+}
 .home {
   width: calc(100vw / 2.5);
   height: calc(100vh - 220px);
@@ -32,17 +35,23 @@ export default defineComponent({
 }
 
 .card {
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 15px;
   margin-bottom: 20px;
   width: 200px;
+  transition: 0.2s;
   h2{
     text-align: center;
     font-weight: 400;
     font-size: 16px;
   }
+  &:hover{
+    background-color: var(--hover);
+  }
 }
+
 .img{
+  border-radius: 10px;
 width: 150px;
 height: 150px;
 background-color: var(--color2);
@@ -55,15 +64,22 @@ background-color: var(--color2);
 .price {
   color: #444;
   font-size: 1.1em;
+  text-decoration: underline;
+  text-underline-offset: 5px;
   margin-bottom: 10px;
 }
 
-.add-button {
-  background-color: #4CAF50;
+.button-pedidos {
+  width: auto;
+  line-height: 0;
+  height: 30px;
   color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+  font-size: 15px;
+  font-weight: 100;
+  background-color: var(--color3);
+  &:hover {
+    background-color: white;
+    color: var(--color1);
+  }
 }
 </style>
