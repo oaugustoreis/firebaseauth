@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <div class="header" v-if="isLogged">
+    <div class="header shadow" v-if="isLogged">
       <div class="header-inner center">
         <p>Filtros</p>
       </div>
